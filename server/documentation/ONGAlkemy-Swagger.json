@@ -1,0 +1,1477 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Api Rest for ONG",
+    "version": "1.0.0",
+    "title": "Proyect ONG Alkmey"
+  },
+  "host": "localhost:3000",
+  "tags": [
+    {
+      "name": "users",
+      "description": "CRUD user record",
+      "externalDocs": {
+        "url": "http://localhost:3000/users"
+      }
+    },
+    {
+      "name": "organizations",
+      "description": "Organization information",
+      "externalDocs": {
+        "url": "http://localhost:3000/organizations"
+      }
+    },
+    {
+      "name": "news",
+      "description": "CRUD news record",
+      "externalDocs": {
+        "url": "http://localhost:3000/news"
+      }
+    },
+    {
+      "name": "contacts",
+      "description": "Contacts functionality",
+      "externalDocs": {
+        "url": "http://localhost:3000/contacts"
+      }
+    },
+    {
+      "name": "activities",
+      "description": "Activities functionality",
+      "externalDocs": {
+        "url": "http://localhost:3000/activities"
+      }
+    },
+    {
+      "name": "categories",
+      "description": "Categories functionality",
+      "externalDocs": {
+        "url": "http://localhost:3000/categories"
+      }
+    },
+    {
+      "name": "testimonials",
+      "description": "Testimonials functionality",
+      "externalDocs": {
+        "url": "http://localhost:3000/testimonials"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users/": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get all users",
+        "description": "Get all users records",
+        "operationId": "allUserList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User list found succesfully",
+            "schema": {
+              "$ref": "#/definitions/users"
+            }
+          },
+          "401": {
+            "description": "The token has expired"
+          },
+          "403": {
+            "description": "Not have permission of admin"
+          },
+          "500": {
+            "description": "Error with data base"
+          }
+        }
+      }
+    },
+    "/users/auth/me": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Info personal",
+        "description": "Get info personal",
+        "operationId": "getPersonalInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "401": {
+            "description": "The token has expired"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/auth/register": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Add a new user",
+        "description": "Create new record user",
+        "operationId": "userRegistration",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "email",
+                "password",
+                "firstName",
+                "lastName"
+              ],
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "400": {
+            "description": "Bad request: The resource was not requested well"
+          },
+          "404": {
+            "description": "El usuario ya a sido registrado"
+          }
+        }
+      }
+    },
+    "/users/auth/login": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Login user",
+        "description": "Login user",
+        "operationId": "authenticateLogin",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "email",
+                "password"
+              ],
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "404": {
+            "description": "Not Found: Resource not found."
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Delete user",
+        "description": "Remove user",
+        "operationId": "deleteUserById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to delete user",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Deleted"
+          },
+          "404": {
+            "description": "Not Found: Resource not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update user",
+        "description": "Update data user",
+        "operationId": "userUpdate",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to update user",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "roleId",
+                "firstName",
+                "lastName"
+              ],
+              "properties": {
+                "roleId": {
+                  "type": "integer"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "401": {
+            "description": "The user trying to update does not exist"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/organizations/{id}/public": {
+      "get": {
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Get organization info",
+        "description": "Get organization info",
+        "operationId": "getPublic",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "organization id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/organizations"
+            }
+          }
+        }
+      }
+    },
+    "/organizations/": {
+      "post": {
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Create a organization",
+        "description": "Create a organization",
+        "operationId": "postOrganization",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "image",
+                "address",
+                "welcomeText",
+                "phone"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "welcomeText": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A Operation object",
+            "schema": {
+              "$ref": "#/definitions/organizations"
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{id}": {
+      "delete": {
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Delete record",
+        "description": "Remove organizarions",
+        "operationId": "deleteOrgById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to delete record",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted"
+          },
+          "404": {
+            "description": "Not Found: Resource not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "organizations"
+        ],
+        "summary": "Update a organization",
+        "description": "Update a organization",
+        "operationId": "putOrganization",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "welcomeText": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "organization id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A Operation object",
+            "schema": {
+              "$ref": "#/definitions/organizations"
+            }
+          }
+        }
+      }
+    },
+    "/news/": {
+      "get": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Get all news",
+        "description": "Get all news records",
+        "operationId": "getAllNews",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/allnews"
+            }
+          },
+          "404": {
+            "description": "Not Found: Resource not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Add new record",
+        "description": "Create news record",
+        "operationId": "createNew",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "content",
+                "categoryId",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "categoryId": {
+                  "type": "integer"
+                },
+                "deletedAt": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/news"
+            }
+          },
+          "404": {
+            "description": "Not Found: Resource not found."
+          },
+          "500": {
+            "description": "An error has occurred. Please talk to the administrator"
+          }
+        }
+      }
+    },
+    "/news/{id}": {
+      "delete": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Delete record",
+        "description": "Remove news",
+        "operationId": "deleteNewById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to delete record",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted"
+          },
+          "404": {
+            "description": "Not Found: Resource not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Update record",
+        "description": "Update news",
+        "operationId": "updateNewById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to update record",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "content",
+                "categoryId",
+                "type",
+                "image"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "categoryId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/news"
+            }
+          },
+          "404": {
+            "description": "New entry not found"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "news"
+        ],
+        "summary": "Get record by Id",
+        "description": "Select news by Id",
+        "operationId": "getNewsById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to select news record",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/news"
+            }
+          },
+          "404": {
+            "description": "Insert a valid Id"
+          }
+        }
+      }
+    },
+    "/contacts/": {
+      "get": {
+        "tags": [
+          "contacts"
+        ],
+        "summary": "Get all contact",
+        "description": "Get all contact",
+        "operationId": "getContacts",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/allcontacts"
+            }
+          },
+          "403": {
+            "description": "Not have permission of admin"
+          },
+          "500": {
+            "description": "Error with data base"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "contacts"
+        ],
+        "summary": "Add new record",
+        "description": "Create contacts record",
+        "operationId": "createNewContact",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "phone",
+                "email",
+                "message"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/contacts"
+            }
+          },
+          "400": {
+            "description": "false"
+          },
+          "404": {
+            "description": "Couldn't create the contact"
+          }
+        }
+      }
+    },
+    "/activities/": {
+      "get": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Get all records ",
+        "description": "Get list of all activities",
+        "operationId": "listAll",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/activities"
+            }
+          },
+          "400": {
+            "description": "false"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Add new record",
+        "description": "Create activities record",
+        "operationId": "create",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "content",
+                "image"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/activities"
+            }
+          },
+          "400": {
+            "description": "Can't create new Activity!"
+          }
+        }
+      }
+    },
+    "/activities/{id}": {
+      "put": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Update record",
+        "description": "Update activities",
+        "operationId": "update",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to update record",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "content",
+                "image"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/activities"
+            }
+          },
+          "400": {
+            "description": "Activity not found"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "activities"
+        ],
+        "summary": "Get record by Id",
+        "description": "Get activities by Id",
+        "operationId": "listById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to get record",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/activities"
+            }
+          },
+          "400": {
+            "description": "false"
+          }
+        }
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "Get all records",
+        "description": "Get list of all categories",
+        "operationId": "getCategory",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/allcategories"
+            }
+          },
+          "400": {
+            "description": "false"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "Add new record",
+        "description": "Create a new categories record",
+        "operationId": "crateCategory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/categories"
+            }
+          },
+          "400": {
+            "description": "Can't create new category"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "delete": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "Delete record",
+        "description": "Remove categories",
+        "operationId": "deleteCategory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to delete record",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record delete succesfully"
+          },
+          "404": {
+            "description": "Category not found, check and enter a correct id"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "categories"
+        ],
+        "summary": "Update record",
+        "description": "Update categories",
+        "operationId": "updateCategory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to update record",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "description"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Record update succesfully",
+            "schema": {
+              "$ref": "#/definitions/categories"
+            }
+          },
+          "400": {
+            "description": "Record not found, check and enter a correct id"
+          }
+        }
+      }
+    },
+    "/testimonials/{id}": {
+      "put": {
+        "tags": [
+          "testimonials"
+        ],
+        "summary": "Update record",
+        "description": "Update testimonials",
+        "operationId": "updateTestimony",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to update record",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/testimonials"
+            }
+          },
+          "404": {
+            "description": "Testimony not found!"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "testimonials"
+        ],
+        "summary": "Delete testimonies",
+        "description": "Remove testimonies",
+        "operationId": "deleteTestimonyById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id to delete testimonies",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Testimony successfully Deleted"
+          },
+          "404": {
+            "description": "Testimony not found!"
+          }
+        }
+      }
+    },
+    "/testimonials/": {
+      "post": {
+        "tags": [
+          "testimonials"
+        ],
+        "summary": "Add new record",
+        "description": "Create a new testimony record",
+        "operationId": "createTestimony",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to complete register",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "true",
+            "schema": {
+              "$ref": "#/definitions/testimonials"
+            }
+          },
+          "400": {
+            "description": "Can't create testimony record"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/user"
+      }
+    },
+    "allnews": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/news"
+      }
+    },
+    "allcontacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/contacts"
+      }
+    },
+    "allcategories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/categories"
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "roleId": {
+          "type": "integer"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "user"
+      },
+      "required": [
+        "id",
+        "email",
+        "password",
+        "firstName",
+        "roleId"
+      ]
+    },
+    "organizations": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "welcomeText": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "organizations"
+      }
+    },
+    "news": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "categoryId": {
+          "type": "integer"
+        }
+      },
+      "xml": {
+        "name": "news"
+      },
+      "required": [
+        "id",
+        "name",
+        "content",
+        "categoryId",
+        "image"
+      ]
+    },
+    "contacts": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "contacts"
+      },
+      "required": [
+        "id",
+        "name",
+        "email"
+      ]
+    },
+    "activities": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "activities"
+      },
+      "required": [
+        "id",
+        "name",
+        "content",
+        "image"
+      ]
+    },
+    "categories": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "categories"
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "testimonials": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "testimonials"
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    }
+  }
+}
