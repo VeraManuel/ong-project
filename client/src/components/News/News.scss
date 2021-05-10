@@ -1,0 +1,80 @@
+@import '../../App.scss';
+
+.news__title {
+  font-size: $sectionHeading;
+  margin-top: 20px;
+}
+
+.news__container {
+    width: 98vw;
+    margin:0 auto;
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+  }
+  
+  .newsCard {
+    position: relative;
+    width: 280px;
+    height: 350px;
+    margin: 2vw;
+    border-radius: 5px;
+  }
+  
+  .newsCard:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+  
+  .newsCard__image {
+    object-fit:cover;
+    height: 350px;
+    width:100%
+  }
+  
+  .newsCard__title {
+    position: absolute;
+    top: 240px;
+    left: 7px;
+    text-align: left;
+    background-color: rgba(238, 237, 237, 0.979);
+    padding: 5px;
+    border-radius:7px;
+    max-width: 250px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  //pagination
+.paginationBttns {
+    width:80%;
+    margin: 5px auto;
+    height: 40px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .paginationBttns a {
+    padding: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1px solid $linkColor;
+    cursor: pointer;
+    color: $primaryColor;
+  }
+  
+  .paginationBttns a:hover {
+    color: white;
+    background-color: $linkColor;
+  }
+  
+  .paginationActive a {
+    color: white;
+    background-color: $linkColor;
+  }
+
+  @media (max-width: 971px) {
+    .news__container {
+      justify-content: space-around;
+    }
+  }

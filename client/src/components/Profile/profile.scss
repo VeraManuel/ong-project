@@ -1,0 +1,129 @@
+@import '../../App.scss';
+
+.container__profile {
+    display: flex; 
+    flex-direction: column;
+    /* margin: 0px auto; */
+}
+@media only screen and (min-width: 768px) {
+    .container__profile {
+        flex-direction: row;
+        height: 100vh;
+    } 
+}
+
+.sidebar {
+    background-color: $primaryColorHint;
+    height: 70px;
+}
+@media only screen and (min-width: 768px) {
+    .sidebar {
+        height: 100%;
+    }
+}
+.sidebar__list {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-left: 0px;
+}
+
+.sidebar__element {
+    list-style-type: none;
+}
+@media only screen and (min-width: 768px) {
+    .sidebar__list  {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .sidebar__element {
+        margin: 25px;
+        list-style-type: none;
+    } 
+}
+.sidebar__element a {
+    margin: 10px;
+    background: $primaryColor;
+    padding: 10px 15px;
+    color: $btnSubmitBgc;
+    border-radius: 5px;
+}
+.main {
+    margin: 0 auto;
+    max-width: 700px;
+    height: 100vh;
+}
+.profile {
+    margin:15px;
+    padding: 5px 25px;
+    border-radius: 5px;
+}
+.profile__info {
+    text-align: left;
+}
+.profile__p {
+    font-size: 1rem;
+}
+@media only screen and (min-width: 768px) {
+    .profile__p {
+        font-size: 1.25rem;
+    } 
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.from__title {
+    padding: 5px 20px;
+}
+.form__input {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border: 1px solid $primaryColorHint;
+    border-radius: 3px;
+}
+.form__btn {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border:none;
+    border-radius: 3px;
+    cursor:pointer;
+    background: $btnSubmitBgc;
+    color: white;
+}
+
+.form__btn-confirm-delete {
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border:none;
+    border-radius: 3px;
+    cursor:pointer;
+    background: $btnSubmitBgc;
+    color: $primaryColor;
+}
+.form__btn--delete {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border:none;
+    border-radius: 3px;
+    cursor:pointer;
+    background: $errorColor;
+    color: white;
+}
+
+.form__error-message {
+    text-align: center;
+    font-size: 0.8rem;
+    color: $errorColor;
+}
+.confirmDelete{
+    text-align: center;
+    font-size: 0.8rem;
+}
+.confirmDelete__buttonsContainer {
+    display: flex;
+    justify-content: space-evenly;
+}

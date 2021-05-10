@@ -1,0 +1,42 @@
+@import '../../App.scss';
+
+.error-container {
+    height: 100vh;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background: $primaryColor;
+}
+.error-title {
+    font-size: 2.25rem;
+    color: white;
+}
+
+.activity-container {
+    margin: 0 auto;
+    padding: 10px 20px;
+    max-width: 768px;
+}
+.activity-title {
+    font-size: 2.25rem;
+}
+
+.activity-image {
+    width:100%;
+    
+}
+.activity-paragraph {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    font-size: 1.25rem;
+}
+.loader-container {
+    height: 100vh;
+    margin: 0 auto;
+    padding: 10px 20px;
+    max-width: 768px;
+    display: flex;
+    justify-content: center;
+}
+.error__img {
+    margin: auto;
+}

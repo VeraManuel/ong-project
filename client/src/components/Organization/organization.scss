@@ -1,0 +1,70 @@
+@import '../../App.scss';
+
+.form-container {
+    max-width: 500px;
+    width: 75%;
+    height: 100vh;
+    margin: 0 auto;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.form__title {
+    margin-top: 30px;
+    font-size: 2rem;
+}
+
+.form__label {
+    margin-bottom: 5px;
+padding-bottom: 10px;
+margin-top: 30px;
+}
+
+.form__input-label {
+    color: $linkColor; 
+    padding: 10px 15px;
+    border-radius: 0.375rem;
+}
+.form__input-span {
+    color: $linkColor;
+    cursor: pointer;
+}
+.form__input {
+    padding: 10px 15px; 
+}
+.form__input-file {
+    position: absolute;
+width: 1px;
+height: 1px;
+padding: 0;
+margin: -1px;
+overflow: hidden;
+clip: rect(0, 0, 0, 0);
+white-space: nowrap;
+border-width: 0;
+}
+.form__file-section {
+    background: rgb(243, 243, 243);
+    border-radius: 0.375rem;
+}
+.form__file-container {
+    padding: 20px;
+    margin: 10px;
+    border-radius: 0.375rem;
+    border: 2px dashed;
+}
+
+.form__btn{
+    margin-top: 20px;
+}
+
+.svg-icon {
+    margin: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 3rem;
+    width: 3rem;
+}

@@ -1,0 +1,5 @@
+/* The loader will cover all the width of the container*/
+.loader {
+    width: 100%;
+    text-align: center;
+}
